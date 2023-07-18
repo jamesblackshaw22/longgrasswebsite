@@ -1,0 +1,47 @@
+<style>
+    .home-page-content{
+        display: grid;
+        grid-template-columns: 1fr 5fr 1fr;
+    }
+    .field-headers{
+        text-align: center;
+        display: grid;
+        grid-template-columns: 5fr 1fr 1fr;
+    }
+</style>
+
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="field-headers">
+    <div>
+        <h2>{{ field.name }}</h2>
+    </div>
+    <div>
+        <p><a href="{% url 'create-indecision' %}">New Indecision</a></p>
+    </div>
+
+</div>
+
+<div class="home-page-content">
+    <div>
+        <h3>Your Fields</h3>
+        {% include "base/fields_component.html" %}
+    </div>
+    <div>
+        {% for indecision in indecisions %}
+        <div>
+            <h4>{{ indecision.title }}</h4>
+            <p>{{ indecision.description }}</p>
+            <p>No earlier than {{ indecision.no_earlier_than }}</p>
+            <p>Status : {{ indecision.status.name }}</p>
+            <hr>
+        </div>
+        {% endfor %}
+    </div>
+    <div>
+        <h3>Recent Activity</h3>
+    </div>
+</div>
+<hr>
+{% endblock content %}
