@@ -1,9 +1,10 @@
+from django.forms import ValidationError
 from django.shortcuts import redirect, render
 from .models import User, Field, Indecision, Status
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from .forms import IndecisionForm, StatusForm, FieldForm
+from .forms import IndecisionForm, JoinFieldForm, StatusForm, FieldForm
 
 # Create your views here.
 from django.http import HttpResponse
@@ -112,4 +113,15 @@ def createIndecision(request):
 
 
 def joinField(request):
-    return
+    form = JoinFieldForm(code=0)
+    if request.method == "POST":
+        form = JoinFieldForm(request.POST, code=request.POST.get("code"))
+        if form.is_valid():
+            cd = form.cleaned_data
+            code = cd.get("code")
+            field = Field.objects.get(code=code)
+            field.participants.add(request.user)
+            return redirect("home", field.code)
+
+    context = {"form": form}
+    return render(request, "base/join_field_form.html", context)

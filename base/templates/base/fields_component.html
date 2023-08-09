@@ -1,10 +1,10 @@
 {% for field in fields %}
 <p><a href="/{{field.code}}">{{ field.name }}</a></p>
 {% endfor %}
-<hr>
 {% if num_fields == 1 %}
 <p>You only have the global field!</p>
-<p><a href="{% url 'create-field' %}">Create</a> or join a private field</p>
-{% endif %}
+<p><a href="{% url 'create-field' %}">Create</a> or <a href="{% url 'join-field' %}">join</a> a private field</p>
+{% else %}
 <p><a href={% url 'create-field' %}>Create Field</a></p>
-<p><a href={% url 'join-field' %}>Create Field</a></p>
+<p><a href={% url 'join-field' %}>Join Field</a></p>
+{% endif %}
