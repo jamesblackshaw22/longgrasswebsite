@@ -1,0 +1,4 @@
+django
+ShortUUIDField
+whitenoise 
+psycopg2-binary
